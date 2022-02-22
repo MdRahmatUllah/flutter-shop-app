@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import './screens/product_overview_screen.dart';
+import 'screens/product_detail_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,22 +18,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: ProductOverviewScreen(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Shop App"),
-      ),
-      body: Center(
-        child: const Text(
-          'You have pushed the button this many times:',
-        ),
-      ),
+      routes: {
+        ProductDetailScreen.routeName: (ctx) => const ProductDetailScreen(),
+      },
     );
   }
 }
