@@ -32,6 +32,12 @@ class Cart with ChangeNotifier {
     return _items.containsKey(productId) ? _items[productId]!.quantity : 0;
   }
 
+  double get totalPrice {
+    return _items.values.fold(0, (sum, item) {
+      return sum + (item.quantity * item.price);
+    });
+  }
+
   void addItem(
     String productId,
     String title,
