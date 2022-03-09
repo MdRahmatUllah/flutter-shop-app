@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../providers/cart.dart';
 
 class CartItemViewer extends StatelessWidget {
@@ -7,6 +8,7 @@ class CartItemViewer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var crt = Provider.of<Cart>(context, listen: true);
     return cartItem == null
         ? Center(
             child: Text('Data Error!!!'),
@@ -27,9 +29,28 @@ class CartItemViewer extends StatelessWidget {
                   )),
                 ),
                 title: Text(cartItem.title),
-                subtitle: Text('Quantity: ${cartItem.quantity}x'),
-                trailing: Text(
+                subtitle: Text(
                     'Total: \$${(cartItem.price * cartItem.quantity).toStringAsFixed(2)}'),
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.remove),
+                      onPressed: () {
+                        crt.increaseOrDecreaseItem(
+                            cartItem, false); // true for increase
+                      },
+                    ),
+                    Text('${cartItem.quantity}x'),
+                    IconButton(
+                      icon: Icon(Icons.add),
+                      onPressed: () {
+                        crt.increaseOrDecreaseItem(
+                            cartItem, true); // true for increase
+                      },
+                    ),
+                  ],
+                ),
               ),
             ),
           );

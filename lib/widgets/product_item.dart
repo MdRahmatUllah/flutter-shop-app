@@ -67,31 +67,37 @@ class ItemCartInItems extends StatelessWidget {
     return Consumer<Product>(
       builder: (ctx, producct, _) => cart.isItInTheCart(producct.id) > 0
           ? Badge(
-              child: IconButton(
-                color: Colors.red,
-                icon: Icon(Icons.shopping_cart),
-                onPressed: () {
-                  cart.addItem(
-                    product.id,
-                    product.title,
-                    product.price,
-                  );
-                },
-              ),
+              child: shoppingCartButton(cart: cart, product: product),
               value: cart.isItInTheCart(producct.id).toString(),
               color: Colors.white,
             )
-          : IconButton(
-              color: Colors.red,
-              icon: const Icon(Icons.shopping_cart_outlined),
-              onPressed: () {
-                cart.addItem(
-                  product.id,
-                  product.title,
-                  product.price,
-                );
-              },
-            ),
+          : shoppingCartButton(cart: cart, product: product),
+    );
+  }
+}
+
+class shoppingCartButton extends StatelessWidget {
+  const shoppingCartButton({
+    Key? key,
+    required this.cart,
+    required this.product,
+  }) : super(key: key);
+
+  final Cart cart;
+  final Product product;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      color: Colors.red,
+      icon: Icon(Icons.shopping_cart),
+      onPressed: () {
+        cart.addItem(
+          product.id,
+          product.title,
+          product.price,
+        );
+      },
     );
   }
 }
