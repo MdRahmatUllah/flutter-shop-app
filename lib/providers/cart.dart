@@ -69,24 +69,24 @@ class Cart with ChangeNotifier {
   }
 
   void increaseOrDecreaseItem(
-    CartItem product,
+    String productId,
     bool sign, // true for increase, false for decrease
   ) {
-    print(product);
-    print(sign);
+    // print(product);
+    // print(sign);
 
-    if (_items.containsKey(product.id)) {
+    if (_items.containsKey(productId)) {
       print('Contains key');
       if (!sign) {
         print('Item quantity is');
-        var q = product.quantity as int;
+        var q = _items[productId]!.quantity as int;
         print('Item quantity is $q');
         if (q <= 1) {
-          _items.remove(product.id);
-          print('Item Removed ${product.id}');
+          _items.remove(productId);
+          print('Item Removed ${productId}');
         } else {
           _items.update(
-            product.id,
+            productId,
             (existingCartItem) => CartItem(
               id: existingCartItem.id,
               title: existingCartItem.title,
@@ -97,7 +97,7 @@ class Cart with ChangeNotifier {
         }
       } else {
         _items.update(
-          product.id,
+          productId,
           (existingCartItem) => CartItem(
             id: existingCartItem.id,
             title: existingCartItem.title,
@@ -108,8 +108,18 @@ class Cart with ChangeNotifier {
       }
     } else {
       print('Does not contain key');
-      _items.remove(product);
+      _items.remove(productId);
     }
+    notifyListeners();
+  }
+
+  void removeItem(String id) {
+    _items.remove(id);
+    notifyListeners();
+  }
+
+  void clear() {
+    _items = {};
     notifyListeners();
   }
 }
